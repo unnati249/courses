@@ -1,0 +1,65 @@
+
+<div class="alert alert-danger" *ngIf="isError" role="alert">
+    Some Error Occured! Please try again.
+  </div>
+
+<ng-container *ngTemplateOutlet="(deviceInfo.os=='Android' || deviceInfo.os=='IOS')? mobile : desktop"></ng-container>
+
+<ng-template #mobile>
+<div class="container-fluid">
+
+    <div class="d-inline">
+        <span><b>Courses List</b></span>           
+        <button class="btn btn-success sm ml-4" (click)="createCourse()">Create</button>
+    </div>
+    
+  
+        <div *ngFor="let course of courses | async">
+              <table>
+                  <tr>         
+                    <td><b>Name</b> : {{course.courseName}}</td> 
+                    <td><b>Duration</b> : {{course.courseDuration}}</td>
+                </tr>
+              <tr>          
+                <td><b>Id</b> : {{course.courseId}}</td>
+                <td><b>Fee</b> : {{course.courseFee}}</td>
+              </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-primary sm" (click)="updateCourse(course._id)">update</button>
+                    </td>   
+                    <td>
+                        <button class="btn btn-danger sm" (click)="deleteCourse(course._id)">delete</button>
+                    </td>
+                </tr> 
+            </table>
+        </div>
+</div>
+</ng-template>
+
+<ng-template #desktop>
+    <div class="container">
+        <div class="d-inline">
+            <span class="display-4">Courses List</span>           
+            <button class="btn btn-success sm ml-4" (click)="createCourse()">Create</button>
+        </div>
+        <table>
+            <tr>
+                <th>Course Name</th>
+                <th>Course Id</th>
+                <th>Course Duration</th>
+                <th>Course Fee</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+            <tr *ngFor="let course of courses | async">
+                <td>{{course.courseName}}</td>                     
+                <td>{{course.courseId}}</td>
+                <td>{{course.courseDuration}}</td>
+                <td>{{course.courseFee}}</td>
+                <td><button class="btn btn-primary sm" (click)="updateCourse(course._id)">Update</button></td>
+                <td><button class="btn btn-danger sm" (click)="deleteCourse(course._id)">Delete</button></td>
+            </tr>
+        </table>
+    </div>
+    </ng-template>
